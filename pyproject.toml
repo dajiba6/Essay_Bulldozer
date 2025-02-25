@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "essay-bulldozer"
+version = "0.1.0"
+description = ""
+authors = ["cyn <chao.yn@foxmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+openai = ">=1.0.0"
+pymupdf = ">=1.18.0"
+pyyaml = ">=6.0.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
