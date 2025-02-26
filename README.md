@@ -50,12 +50,27 @@ analysis:
     - conclusion
   
   prompts:
-    abstract: "请从论文中提取摘要部分的内容，包括研究目的、方法和主要结论。"
-    introduction: "请从论文中提取引言/介绍部分的内容，包括研究背景、问题陈述和研究目标。"
-    methodology: "请从论文中提取方法部分的内容，详细说明研究方法、实验设计和技术细节。"
-    results: "请从论文中提取结果部分的内容，包括实验结果、数据分析和关键发现。"
-    conclusion: "请从论文中提取结论部分的内容，包括主要结论、研究贡献和未来展望。"
-    summary: "请总结这篇论文的主要内容，包括研究目的、方法和结论。"
+    abstract: 
+      text: "请从论文中提取摘要部分的内容，包括研究目的、方法和主要结论。"
+      input_type: "full_text"  # 使用完整PDF文本
+    introduction:
+      text: "请从论文中提取引言/介绍部分的内容，包括研究背景、问题陈述和研究目标。"
+      input_type: "full_text"
+    methodology:
+      text: "基于上述介绍，请详细说明该研究的方法、实验设计和技术细节。"
+      input_type: "full_text"  # 使用上一个section的输出
+    methodology_figure:
+      text: "根据总结的方法，用mermaid语法绘制方法的框架图或流程图。"
+      input_type: "previous"
+    results:
+      text: "基于上述方法，请说明实验结果、数据分析和关键发现。"
+      input_type: "full_text"
+    conclusion:
+      text: "基于以上分析，请总结主要结论、研究贡献和未来展望。"
+      input_type: "full_text"
+    summary:
+      text: "请总结这篇论文的主要内容，包括研究目的、方法和结论。"
+      input_type: "full_text"
 
 ```
 3. 运行分析脚本:

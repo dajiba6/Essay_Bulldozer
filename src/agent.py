@@ -35,19 +35,30 @@ class PaperAnalysisAgent:
 
         # 分段分析
         results = {}
+        previous_output = ""
 
         for section in self.config["analysis"]["sections"]:
-            # 使用配置文件中的prompt
-            prompt = self.config["analysis"]["prompts"].get(section)
-            if prompt:
-                results[section] = await self._analyze_section(
-                    full_text, section, prompt
-                )
+            # 获取section的配置
+            section_config = self.config["analysis"]["prompts"].get(section)
+            if section_config:
+                prompt = section_config["text"]
+                input_type = section_config.get("input_type", "full_text")
+
+                # 根据input_type选择输入文本
+                input_text = full_text if input_type == "full_text" else previous_output
+
+                # 分析当前section
+                result = await self._analyze_section(input_text, section, prompt)
+                results[section] = result
+                previous_output = result
 
         # 生成总结
         if "summary" in self.config["analysis"]["prompts"]:
+            summary_config = self.config["analysis"]["prompts"]["summary"]
+            input_type = summary_config.get("input_type", "full_text")
+            input_text = full_text if input_type == "full_text" else previous_output
             results["summary"] = await self._analyze_section(
-                full_text, "summary", self.config["analysis"]["prompts"]["summary"]
+                input_text, "summary", summary_config["text"]
             )
 
         # 保存debug信息
